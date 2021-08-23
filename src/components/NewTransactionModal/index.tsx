@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import Modal from 'react-modal';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
@@ -11,7 +11,20 @@ interface NewTransactionModalProps {
 }
 
 export function NewTransactionModal({isOpen, onRequestClose}: NewTransactionModalProps) {
+const [title, setTitle] = React.useState('')
+const [value, setValue] = React.useState(0)
+const [category, setCategory] = React.useState('')
 const [type, setType] = React.useState('deposit')
+
+  function handleCreateNewTransaction(event: FormEvent) {
+    event.preventDefault();
+    console.log({
+      title,
+      value,
+      category,
+      type
+    })
+  }
 
   return (
     <Modal 
@@ -26,15 +39,20 @@ const [type, setType] = React.useState('deposit')
         className="react-modal-close">
         <img src={closeImg} alt="" />
       </button>
-      <Container>
+
+      <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar transação</h2>
 
         <input 
           placeholder="Título" 
+          value={title}
+          onChange={event => setTitle(event.target.value)}
         />
 
         <input 
           type="number"
+          value={value}
+          onChange={event => setValue(Number(event.target.value))}
           placeholder="Valor" 
         />
 
@@ -62,6 +80,8 @@ const [type, setType] = React.useState('deposit')
 
         <input 
           placeholder="Categoria" 
+          value={category}
+          onChange={event => setCategory(event.target.value)}
         />
 
         <button type="submit">
