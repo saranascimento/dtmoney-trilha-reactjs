@@ -2,8 +2,10 @@ import React, { FormEvent } from 'react';
 import Modal from 'react-modal';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
-
 import closeImg from '../../assets/close.svg';
+
+import { api } from '../../services/api';
+
 import { Container, RadioBox, TansactionTypeContainer } from './style';
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -18,12 +20,15 @@ const [type, setType] = React.useState('deposit')
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-    console.log({
+
+    const data = {
       title,
       value,
       category,
-      type
-    })
+      type,
+    };
+
+    api.post('/transactions', data) 
   }
 
   return (
