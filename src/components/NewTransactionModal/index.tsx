@@ -20,10 +20,10 @@ const [amount, setAmount] = React.useState(0)
 const [category, setCategory] = React.useState('')
 const [type, setType] = React.useState('deposit')
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-
-    createTransaction(
+ 
+    await createTransaction(
       {
         title,
         amount,
@@ -31,6 +31,11 @@ const [type, setType] = React.useState('deposit')
         category
       }
     )
+    setTitle('');
+    setAmount(0);
+    setType('deposit');
+    setCategory('');
+    onRequestClose();
   }
 
   return (
