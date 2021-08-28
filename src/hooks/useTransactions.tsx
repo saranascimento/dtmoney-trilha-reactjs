@@ -1,5 +1,5 @@
 import React from 'react';
-import { api } from './services/api';
+import { api } from '../services/api';
 
 interface Transaction {
   id: number;
@@ -19,7 +19,7 @@ interface TransactionsContextData {
   createTransaction: (transaction: TransactionInput) => Promise<void>;
 }
 
-export const TransactionsContext = React.createContext<TransactionsContextData>(
+const TransactionsContext = React.createContext<TransactionsContextData>(
   {} as TransactionsContextData
 );
 
@@ -40,8 +40,10 @@ export function TransactionsProvider({children}: TransactionsProviderProps) {
 
     setTransactions([
       ...transactions,
-      transaction
-    ])
+      transaction,
+    ]);
+
+    console.log(transactions)
   }
 
   return (
@@ -54,5 +56,10 @@ export function TransactionsProvider({children}: TransactionsProviderProps) {
       {children}
     </TransactionsContext.Provider>
   )
-  
+}
+
+export function useTransactions() {
+  const context = React.useContext(TransactionsContext)
+
+  return context;
 }
